@@ -13,9 +13,12 @@ class Create_Purchases {
 		Schema::create('purchases', function($table) {
 			$table->engine = 'InnoDB';
 		    $table->increments('id');
-		    $table->string('purchase_number', 128);		    	    
+		    $table->string('purchase_number', 128);
+		    $table->integer('purchase_order_id')->unsigned();	
+		    $table->date('date_purchased');	    	    
 		    $table->integer('created_by')->unsigned();//->foreign()->references('id')->on('users');		    
-		    $table->timestamp('created_at');		    
+		    $table->integer('updated_by')->unsigned();
+		    $table->timestamps();		    
 		});	
 	}
 
@@ -26,13 +29,7 @@ class Create_Purchases {
 	 */
 	public function down()
 	{
-		//Schema::drop('purchases');
-		//Schema::drop('purchase_items');
-		//Schema::drop('purchase_item_details');
-		//Schema::drop('products');
-		//Schema::drop('categories');
-		//Schema::drop('product_types');
-		//Schema::drop('sale_units');
+		
 		
 	}
 

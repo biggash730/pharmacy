@@ -21,6 +21,7 @@ class Create_Users {
 		    $table->string('phone', 45)->nullable();
 		    $table->string('password', 128);	    
 		    $table->string('picture_file_name', 128)->nullable();
+		    $table->integer('role_id')->unsigned();
 		    $table->integer('created_by')->unsigned();
 		    $table->integer('updated_by')->unsigned();
 		    $table->timestamps();
@@ -34,20 +35,23 @@ class Create_Users {
 	 * @return void
 	 */
 	public function down()
-	{			
-		Schema::drop('order_details');
-		Schema::drop('orders');	
+	{
+		Schema::table('users', function($table) {	
+		   	$table->drop_foreign('users_role_id_foreign');	    
+		});
+		Schema::drop('purchase_order_details');			
 		Schema::drop('permissions');
 		Schema::drop('modules');
-		Schema::drop('purchase_item_details');
-		Schema::drop('purchase_items');
+		Schema::drop('purchased_item_details');
+		Schema::drop('purchased_items');
 		Schema::drop('purchases');
+		Schema::drop('purchase_orders');
+		Schema::drop('suppliers');
 		Schema::drop('securables');
 		Schema::drop('products');
 		Schema::drop('product_types');
-		Schema::drop('categories');
-		Schema::drop('sale_units');
-		Schema::drop('user_roles');
+		Schema::drop('product_categories');
+		Schema::drop('sale_units');				
 		Schema::drop('roles');
 		Schema::drop('users');		
 	}

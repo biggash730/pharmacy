@@ -3,7 +3,7 @@
 class Create_Constraints {
 
 	/**
-	 *this function will create the constraints table
+	 *this function will create the constraints on the tables
 	 * and the specified columns.
 	 * @return void
 	 */
@@ -11,7 +11,7 @@ class Create_Constraints {
 	{
 		// create constraints on the users table
 		Schema::table('users', function($table) {	
-		    	    
+		   	$table->foreign('role_id')->references('id')->on('roles');
 		    $table->foreign('created_by')->references('id')->on('users');
 		    $table->foreign('updated_by')->references('id')->on('users');		    
 		});
@@ -45,35 +45,46 @@ class Create_Constraints {
 		});
 
 		// create constraints on the purchases table
-		Schema::table('purchases', function($table) {	    		    
-		    $table->foreign('created_by')->references('id')->on('users');		    	    
+		Schema::table('purchases', function($table) {
+			$table->foreign('purchase_order_id')->references('id')->on('purchase_orders');	    		    
+		    $table->foreign('created_by')->references('id')->on('users');
+		    $table->foreign('updated_by')->references('id')->on('users');		    	    
 		});
 
 		// create constraints on the purchase_items table
-		Schema::table('purchase_items', function($table) {			
+		Schema::table('purchased_items', function($table) {			
 		    $table->foreign('purchase_id')->references('id')->on('purchases');		    
 		    $table->foreign('product_id')->references('id')->on('products');
-		    $table->foreign('created_by')->references('id')->on('users');		    
+		    $table->foreign('supplier_id')->references('id')->on('suppliers');
+		    $table->foreign('created_by')->references('id')->on('users');
+		    $table->foreign('updated_by')->references('id')->on('users');		    
 		});
 
 		// create constraints on the purchase_item_details table
-		Schema::table('purchase_item_details', function($table) {			
-		    $table->foreign('purchase_Item_id')->references('id')->on('purchase_Items');    
+		Schema::table('purchased_item_details', function($table) {			
+		    $table->foreign('purchased_Item_id')->references('id')->on('purchased_Items');    
 		    $table->foreign('product_id')->references('id')->on('products');
-		    $table->foreign('created_by')->references('id')->on('users');		    
+		    $table->foreign('created_by')->references('id')->on('users');
+		    $table->foreign('updated_by')->references('id')->on('users');		    
 		});
 
 		// create constraints on the products table
 		Schema::table('products', function($table) {			
-		    $table->foreign('category_id')->references('id')->on('categories');	
+		    $table->foreign('product_category_id')->references('id')->on('product_categories');	
 		    $table->foreign('product_type_id')->references('id')->on('product_types');	
 		    $table->foreign('sale_unit_id')->references('id')->on('sale_units');		    
 		    $table->foreign('created_by')->references('id')->on('users');
 		    $table->foreign('updated_by')->references('id')->on('users');		    
 		});
 
-		// create constraints on the categories table
-		Schema::table('categories', function($table) {		    	    
+		// create constraints on the product_categories table
+		Schema::table('product_categories', function($table) {		    	    
+		    $table->foreign('created_by')->references('id')->on('users');
+		    $table->foreign('updated_by')->references('id')->on('users');		    
+		});
+
+		// create constraints on the suppliers table
+		Schema::table('suppliers', function($table) {		    	    
 		    $table->foreign('created_by')->references('id')->on('users');
 		    $table->foreign('updated_by')->references('id')->on('users');		    
 		});
@@ -90,23 +101,25 @@ class Create_Constraints {
 		    $table->foreign('updated_by')->references('id')->on('users');		    
 		});
 
-		// create constraints on the orders table
-		Schema::table('orders', function($table) {			
+		// create constraints on the purchase_orders table
+		Schema::table('purchase_orders', function($table) {			
 		    $table->foreign('created_by')->references('id')->on('users');
+		    $table->foreign('updated_by')->references('id')->on('users');
 		});
 
-		// create constraints on the order_details table
-		Schema::table('order_details', function($table) {	
-			$table->foreign('order_id')->references('id')->on('orders');
+		// create constraints on the purchase_order_details table
+		Schema::table('purchase_order_details', function($table) {	
+			$table->foreign('purchase_order_id')->references('id')->on('purchase_orders');
 			$table->foreign('product_id')->references('id')->on('products');		
-		    $table->foreign('created_by')->references('id')->on('users');		    		    
+		    $table->foreign('created_by')->references('id')->on('users');
+		    $table->foreign('updated_by')->references('id')->on('users');		    		    
 		});
 
 		// create constraints on the user_roles table
-		Schema::table('user_roles', function($table) {	
-			$table->foreign('role_id')->references('id')->on('roles');
-			$table->foreign('user_id')->references('id')->on('users');   	    		    
-		});
+		//Schema::table('user_roles', function($table) {	
+			//$table->foreign('role_id')->references('id')->on('roles');
+			//$table->foreign('user_id')->references('id')->on('users');   	    		    
+		//});
 
 	}
 
