@@ -10,8 +10,8 @@ class Create_Constraints {
 	public function up()
 	{
 		// create constraints on the users table
-		Schema::table('users', function($table) {			
-		    $table->foreign('role_id')->references('id')->on('roles');		    
+		Schema::table('users', function($table) {	
+		    	    
 		    $table->foreign('created_by')->references('id')->on('users');
 		    $table->foreign('updated_by')->references('id')->on('users');		    
 		});
@@ -100,6 +100,12 @@ class Create_Constraints {
 			$table->foreign('order_id')->references('id')->on('orders');
 			$table->foreign('product_id')->references('id')->on('products');		
 		    $table->foreign('created_by')->references('id')->on('users');		    		    
+		});
+
+		// create constraints on the user_roles table
+		Schema::table('user_roles', function($table) {	
+			$table->foreign('role_id')->references('id')->on('roles');
+			$table->foreign('user_id')->references('id')->on('users');   	    		    
 		});
 
 	}

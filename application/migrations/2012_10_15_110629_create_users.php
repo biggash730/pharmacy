@@ -19,8 +19,7 @@ class Create_Users {
 		    $table->string('other_names', 128)->nullable();
 		    $table->string('email', 128);
 		    $table->string('phone', 45)->nullable();
-		    $table->string('password', 128);		    		    
-		    $table->integer('role_id')->unsigned();
+		    $table->string('password', 128);	    
 		    $table->string('picture_file_name', 128)->nullable();
 		    $table->integer('created_by')->unsigned();
 		    $table->integer('updated_by')->unsigned();
@@ -48,7 +47,7 @@ class Create_Users {
 		Schema::drop('product_types');
 		Schema::drop('categories');
 		Schema::drop('sale_units');
-		
+		Schema::drop('user_roles');
 		Schema::drop('roles');
 		Schema::drop('users');		
 	}
